@@ -1,0 +1,135 @@
+<!doctype html>
+<html>
+<head>
+	<meta charset="utf-8"/>
+	<meta name="viewport" content="width=device-width, viewport-fit=cover"/>
+	<title>Note Names - Setup</title>
+	<link rel="stylesheet" href="include/jquery-ui.css"/>
+	<link rel="stylesheet" href="include/jquery-ui-1.12.icon-font.min.css"/>
+	<link rel="stylesheet" href="basics.css"/>
+</head>
+<body>
+	<style>
+        body {
+            margin-top: 2em;
+            font-size: 2em;
+        }
+
+        fieldset {
+            margin-bottom: 2em;
+            margin-left: auto;
+            margin-right: auto;
+            border-radius: 0.8em;
+            max-width: 20em;
+        }
+
+        #clef {
+            display: grid;
+        }
+
+        #clef div {
+            display: inline-grid;
+        }
+
+        #image-Treble div.staff.selected, #image-Bass div.staff.selected {
+            color: black;
+            text-shadow: 0 0 0.1em white, 0 0 0.2em blue;
+            transition: color 1s, text-shadow 1s;
+        }
+
+        #image-Treble, #label-Treble, #explanation-Treble {
+            grid-column: 1;
+        }
+
+        #image-Bass, #label-Bass, #explanation-Bass {
+            grid-column: 2;
+        }
+
+        #image-Treble, #image-Bass {
+            grid-row: 1;
+            font-size: 2em;
+        }
+
+        #image-Treble div.staff, #image-Bass div.staff {
+            display: inline-block;
+            margin-left: auto;
+            margin-right: auto;
+            margin-top: -1em;
+            margin-bottom: -1.5em;
+            color: rgb(51, 51, 51);
+            transition: color 1s, text-shadow 1s;
+        }
+
+        #label-Treble, #label-Bass {
+            grid-row: 2;
+            font-weight: bold;
+        }
+
+        #label-Treble input, #label-Bass input {
+            position: relative;
+            top: -0.5em;
+        }
+
+        #explanation-Treble, #explanation-Bass {
+            grid-row: 3;
+            font-size: 0.6em;
+            font-weight: 100;
+        }
+
+        #rangeBoundaryLeft, #rangeBoundaryRight {
+            font-size: 2em;
+        }
+
+        .stepper {
+            display: inline-block;
+            font-size: 1em;
+			touch-action: manipulation;
+        }
+
+        .stepper .ui-button {
+            padding-top: 0.16em;
+            padding-bottom: 0.16em;
+            padding-left: 0.3em;
+            padding-right: 0.3em;
+        }
+	</style>
+	<script src="include/jquery-1.12.2.min.js"></script>
+	<script src="include/jquery-ui.min.js"></script>
+	<script src="include/howler.core.js"></script>
+	<script src="music.js"></script>
+	<script src="setup.js"></script>
+    
+    <fieldset>
+        <legend>Clef</legend>
+        <div id="clef">
+            <div id="image-Treble"><div class="staff"></div></div>
+            <div id="label-Treble"><label><input type="radio" id="Treble" name="clef" value="Treble"> Treble</label></div>
+            <div id="explanation-Treble">(flute, oboe, clarinet, sax, trumpet, horn, mallets)</div>
+            
+            <div id="image-Bass"><div class="staff"></div></div>
+            <div id="label-Bass"><label><input type="radio" id="Bass" name="clef" value="Bass"> Bass</label></div>
+            <div id="explanation-Bass">(bassoon, trombone, baritone, tuba, string bass, timpani)</div>
+        </div>
+    </fieldset>
+
+    <fieldset>
+        <legend>Range</legend>
+        Include notes between:<br/>
+        <div class="stepper">
+            <button id="rangeBoundaryLeft-stepper-up"></button>
+            <br/>
+            <button id="rangeBoundaryLeft-stepper-down"></button>
+        </div>
+        <div class="staff" id="rangeBoundaryLeft"></div>
+        &nbsp;and&nbsp;
+        <div class="staff" id="rangeBoundaryRight"></div>
+        <div class="stepper">
+            <button id="rangeBoundaryRight-stepper-up"></button>
+            <br/>
+            <button id="rangeBoundaryRight-stepper-down"></button>
+        </div>
+    </fieldset>
+
+    <button id="play"></button>
+</body>
+</html>

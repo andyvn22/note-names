@@ -1,0 +1,100 @@
+<!doctype html>
+<html>
+<head>
+	<meta charset="utf-8"/>
+	<meta name="viewport" content="width=device-width, viewport-fit=cover"/>
+	<title>Note Names</title>
+	<link rel="stylesheet" href="include/jquery-ui.css"/>
+	<link rel="stylesheet" href="include/jquery-ui-1.12.icon-font.min.css"/>
+	<link rel="stylesheet" href="basics.css"/>
+</head>
+<body>
+	<style>
+		#piece {
+			font-size: 12vw;
+		}
+
+		@keyframes correct {
+			from { color: lightgreen; }
+			to { color: green; }
+		}
+
+		.correct {
+			color: green;
+			animation: correct 1s ease-in;
+		}
+
+		@keyframes incorrect {
+			from { color: red; }
+			to { color: black; }
+		}
+
+		.incorrect {
+			color: black;
+			animation: incorrect 1s ease-in;
+		}
+
+		@keyframes still-incorrect {
+			from { color: red; }
+			to { color: black; }
+		}
+
+		.still-incorrect {
+			color: black;
+			animation: still-incorrect 1s ease-in;
+		}
+
+		@keyframes eventually-correct {
+			from { color: lightgreen; }
+			to { color: goldenrod; }
+		}
+
+		.eventually-correct {
+			color: goldenrod;
+			animation: eventually-correct 1s ease-in;
+		}
+
+		#buttons {
+			font-size: min(5vw, 1em); /* fill screen unless screen is silly wide */
+			touch-action: manipulation;
+		}
+
+		#buttons .ui-button {
+			width: 12%;
+			max-width: 3em;
+			padding-left: 0;
+			padding-right: 0;
+		}
+
+		#score {
+			margin-top: 0.5em;
+		}
+
+		#settings {
+			font-size: min(5vw, 1em); /* don't get larger than the note buttons */
+		}
+	</style>
+	<script src="include/jquery-1.12.2.min.js"></script>
+	<script src="include/jquery-ui.min.js"></script>
+	<script src="include/howler.core.js"></script>
+	<script src="music.js"></script>
+	<script src="index.js"></script>
+
+	<div id="piece" class="staff"></div>
+	
+	<div id="buttons">
+		<button id="a"></button>
+		<button id="b"></button>
+		<button id="c"></button>
+		<button id="d"></button>
+		<button id="e"></button>
+		<button id="f"></button>
+		<button id="g"></button>
+	</div>
+
+	<div id="score"></div>
+
+	<br/>
+	<button id="settings"></button>
+</body>
+</html>

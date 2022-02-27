@@ -1,0 +1,37 @@
+JGSW:
++ Make a pitch struct
+    + Make a piece struct with a clef & a list of pitches
+    + Display a piece on a staff
++ Make letter-name answer buttons with key shortcuts
++ Color notes green/flash red
++ Fix stupid redraw bug--switch to Bravura?
++ CSS animations instead of jQueryUI?
++ Check bass clef
++ Add ledger line support
++ Display score
++ Create settings page, including clef & range
+    + Create settings class
+    + Read settings from URL
+    + Use settings in quiz
+    + Write settings to URL
+    + Sync settings with clef radio buttons
+    + Display staves for range boundaries
+    + Allow editing range boundaries
++ Link back to settings page
++ Make treble/bass selection pretty with images
+- Try wrapping a long staff in a scroller
+- Try auto-scrolling to the next note
+- If scrolling seems like the way to go, add a restart button at the end of the piece
+- Can you add letter names to finished noteheads?
+- Add help button that displays answers & explanations
+    - Explain space notes & line notes with mnemonics
+    - Explain high & low notes by counting up to them
+- Add flats/sharps/naturals as an option
+    - Display flat/sharp buttons & disable hotkeys
+- Add key signatures to pieces
+    - Write in 4/4 & add measures
+    - Only display accidentals if needed
+- Check for correct letter name but wrong accidental & explain
+
+BUGS:
+- Messing with text-shadow for the clef highlights in setup causes jitter (at least in Safari)

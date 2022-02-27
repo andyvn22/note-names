@@ -1,0 +1,61 @@
+{
+	"version": "2.0.0",
+	"tasks": [
+        {
+            "type": "typescript",
+            "tsconfig": "tsconfig.json",
+            "problemMatcher": [
+                "$tsc"
+            ],
+            "group": "build",
+            "label": "Build",
+            "presentation": {
+                "echo": true,
+                "revealProblems": "always",
+                "focus": false,
+                "panel": "shared",
+                "showReuseMessage": false,
+                "clear": true
+            }
+        },
+        {
+            "type": "shell",
+            "command": "cp -R note-names ~/Sites/",
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            },
+            "label": "Install Locally",
+            "dependsOn": [
+                "Build"
+            ],
+            "problemMatcher": [],
+            "presentation": {
+                "echo": true,
+                "revealProblems": "always",
+                "focus": false,
+                "panel": "shared",
+                "showReuseMessage": false,
+                "clear": false
+            }
+        },
+        {
+            "type": "shell",
+            "command": "npx gh-pages --dist note-names --message \"Deploy to GitHub Pages\" --no-history",
+            "group": "build",
+            "label": "Deploy to GitHub Pages",
+            "dependsOn": [
+                "Build"
+            ],
+            "problemMatcher": [],
+            "presentation": {
+                "echo": true,
+                "revealProblems": "always",
+                "focus": false,
+                "panel": "shared",
+                "showReuseMessage": false,
+                "clear": false
+            }
+        }
+    ]
+}
