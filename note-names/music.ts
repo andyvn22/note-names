@@ -12,6 +12,24 @@ function assertionFailure(message = "Assertion failed: unreachable code"): never
 	throw message;
 }
 
+let cachedWidth: number | undefined = undefined;
+$(window).on("resize", function() {
+	cachedWidth = document.documentElement.clientWidth; //reading this width is SLOWWWW.
+});
+
+/** Converts from vw (hundredths of viewport width) to pixels */
+function vw(vw: number) {
+	if (cachedWidth === undefined) {
+		cachedWidth = document.documentElement.clientWidth;
+	}
+	return Math.round(vw * cachedWidth / 100);
+}
+
+/** Converts from em to pixels, relative to the font size of the element `relativeTo`, or `document.body` if no element is given. */
+function em(em: number, relativeTo = document.body) {
+	return Math.round(parseFloat(getComputedStyle(relativeTo).fontSize) * em);
+}
+
 class Settings {
     clefName: ClefName
     oneRangeBoundary: Pitch
@@ -116,6 +134,7 @@ class Settings {
 
 	static get correct() { return new Sound("correct"); }
 	static get wrong() { return new Sound("wrong"); }
+	static get fanfare() { return new Sound("fanfare"); }
 }
 
 const AllNoteNames = ["C", "D", "E", "F", "G", "A", "B"] as const;
@@ -353,8 +372,9 @@ class Piece {
     }
 
     static newRandomMain() {
+        const length = 20;
         let notes: Pitch[] = [];
-        for (let i = 0; i < 6; i++) {
+        for (let i = 0; i < length; i++) {
             notes.push(Settings.shared.randomNote());
         }
         return new Piece(Clef.named(Settings.shared.clefName), notes, "main");
@@ -365,7 +385,7 @@ class Piece {
 		return this.pieceID + "-note" + noteIndex;
 	}
     
-    get notation() {
+    notation(finalBarline: boolean = false) {
         let notation = Piece.spacer();
         let staffBackground = "";
         
@@ -376,22 +396,22 @@ class Piece {
         for (let i = 0; i < this.notes.length; i++) {
             let note = this.notes[i];
 
-            staffBackground += Piece.staff(1.5);
+            staffBackground += Piece.staff(2);
             notation += note.notation(this.idForNoteIndex(i), this.clef);
-            notation += Piece.spacer(3.5);
         }
 
-        staffBackground += Piece.staff(0.5);
+        staffBackground += Piece.staff();
+
+        if (finalBarline) {
+            staffBackground += Piece.staff() + `<span class="finalBarline">${Piece.finalBarlineCharacter}</span>`
+        }
         return `<div class="staff-background">${staffBackground}</div>${notation}`;
     }
 
     static staff(length: number = 1) {
         let result = "";
         for (let i = 0; i < Math.floor(length); i++) {
-            result += this.staffCharacter;
-        }
-        if (Math.floor(length) < length) {
-            result += this.staffCharactrNarrow;
+            result += `<span class="staffPiece">${this.staffCharacter}</span>`;
         }
         return result;
     }
@@ -408,7 +428,7 @@ class Piece {
     }
 
     static readonly staffCharacter = "\ue014";
-    static readonly staffCharactrNarrow = "\ue020";
     static readonly spacerCharacter = "&nbsp;";
     static readonly spacerCharacterNarrow = "&thinsp;";
+	static readonly finalBarlineCharacter = "\ue032";
 }

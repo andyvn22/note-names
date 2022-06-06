@@ -27,21 +27,18 @@
             display: grid;
         }
 
-        #clef div {
-            display: inline-grid;
-        }
-
         #image-Treble div.staff.selected, #image-Bass div.staff.selected {
             color: black;
             text-shadow: 0 0 0.1em white, 0 0 0.2em blue;
-            transition: color 1s, text-shadow 1s;
         }
 
         #image-Treble, #label-Treble, #explanation-Treble {
+            display: inline-grid;
             grid-column: 1;
         }
 
         #image-Bass, #label-Bass, #explanation-Bass {
+            display: inline-grid;
             grid-column: 2;
         }
 
@@ -55,9 +52,8 @@
             margin-left: auto;
             margin-right: auto;
             margin-top: -1em;
-            margin-bottom: -1.5em;
+            margin-bottom: -0.6em;
             color: rgb(51, 51, 51);
-            transition: color 1s, text-shadow 1s;
         }
 
         #label-Treble, #label-Bass {
@@ -91,6 +87,33 @@
             padding-bottom: 0.16em;
             padding-left: 0.3em;
             padding-right: 0.3em;
+        }
+
+        /********/
+        /* Help */
+        /********/
+
+        #helpButton {
+            margin-left: 0.5em;
+            font-size: 2em;
+            color: rgb(71, 71, 71);
+            cursor: pointer;
+        }
+
+        #play {
+            margin-left: 3em; /* balance help button & margin so that play button is centered */
+        }
+
+        #helpButton:hover {
+            color: rgb(134, 134, 134);
+        }
+
+        .ui-dialog {
+            font-size: 0.5em;
+        }
+
+        #helpDialog h2 {
+            font-size: 1em;
         }
 	</style>
 	<script src="include/jquery-1.12.2.min.js"></script>
@@ -130,6 +153,16 @@
         </div>
     </fieldset>
 
-    <button id="play"></button>
+    <button id="play"></button> <span id="helpButton" class="ui-icon ui-icon-help"></span>
+
+    <div id="helpDialog">
+        <h2>What is this?</h2>
+        <p>This is a game about note names. Every time you play, you'll get a little more confident at reading music!</p>
+        <h2>Who made this?</h2>
+        <p><a href="https://andyvn.ath.cx/">Andy Van Ness</a> made this. He's a band teacher at Linden Avenue Middle School in Red Hook, New York.</p>
+        <h2>Can I see the code?</h2>
+        <p>Sure! <a href="https://github.com/andyvn22/note-names">Here's the GitHub repository.</a> By the way, this work is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by/4.0/">Creative Commons Attribution 4.0 International License</a>.</p>
+        <a rel="license" href="http://creativecommons.org/licenses/by/4.0/"><img alt="Creative Commons License" style="border-width:0" src="https://i.creativecommons.org/l/by/4.0/88x31.png" /></a>
+    </div>
 </body>
 </html>

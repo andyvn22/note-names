@@ -37,23 +37,16 @@ body {
     transition: opacity 0.8s ease-in-out;
 }
 
-.timeSignature-top {
-    position: relative;
-    left: 0.207em;
-}
-
-.timeSignature-bottom {
-    position: relative;
-    left: -0.207em;
-}
-
 .staff {
     font-family: "Notation";
     display: inline-block;
     white-space: nowrap;
     position: relative;
+    height: 3.2em;
+    overflow-x: visible;
+    overflow-y: visible;
+    margin-bottom: 0;
     margin-top: 0;
-    margin-bottom: -1em;
     margin-right: 0.2em;
     margin-left: 0.05em;
 }
@@ -67,11 +60,35 @@ body {
     /* letter-spacing: 1px; */
 }
 
-.note, .clef, .ledgerLine {
+.timeSignature-top {
+    position: relative;
+    left: 0.207em;
+}
+
+.timeSignature-bottom {
+    position: relative;
+    left: -0.207em;
+}
+
+.note, .clef, .ledgerLine, .staffPiece {
     display: inline-block;
     position: relative;
 }
 
+.note {
+    width: 0.8em;
+}
+
+.staffPiece {
+    width: 0.4em;
+}
+
 .ledgerLine {
     letter-spacing: -1em;
+    left: 0.22em;
+}
+
+.finalBarline {
+    position: relative;
+    left: -0.128em;
 }

@@ -2,16 +2,35 @@ class Quiz {
     piece: Piece
     
     private currentQuestion: number;
+    private questionAttempts: number[];
     private questionTimes: number[];
 
     constructor(piece: Piece) {
         this.piece = piece;
         this.currentQuestion = 0;
+        this.questionAttempts = [];
         this.questionTimes = [];
     }
 
     get isFinished() {
         return this.currentQuestion >= this.piece.notes.length;
+    }
+
+    get currentNoteID() {
+        return this.piece.idForNoteIndex(this.currentQuestion);
+    }
+
+    get accuracy() {
+        if (this.questionAttempts.length == 0) { return null; }
+        return this.questionAttempts.filter(x => x == 1).length / this.questionAttempts.length;
+    }
+
+    get formattedAccuracy() {
+        const accuracy = this.accuracy;
+        if (accuracy === null) { return ""; }
+        const hue = accuracy * 125; //125°==green, 0°==red
+
+        return `<span class="score-data" style="color: hsl(${hue},80%,40%)">${Math.round(accuracy * 100)}%</span> accurate`;
     }
 
     get averageTime() {
@@ -21,6 +40,19 @@ class Quiz {
             sum += this.questionTimes[i] - this.questionTimes[i-1];
         }
         return sum / (this.questionTimes.length - 1);
+    }
+
+    get formattedAverageTime() {
+        const time = this.averageTime;
+        if (time === null) { return ""; }
+        return `<span class="score-data">${Math.round(time / 100) / 10}</span> seconds per note`;
+    }
+
+    private incrementCurrentQuestionAttempts() {
+        while (this.questionAttempts.length <= this.currentQuestion) {
+            this.questionAttempts.push(0);
+        }
+        this.questionAttempts[this.currentQuestion] += 1;
     }
 
     check(guess: PitchClass) {
@@ -36,6 +68,7 @@ class Quiz {
                 element.addClass("correct");
             }
             Sound.correct.play();
+            this.incrementCurrentQuestionAttempts();
             this.questionTimes.push(Date.now());
             this.currentQuestion += 1;
             return true;
@@ -50,6 +83,7 @@ class Quiz {
                 element.addClass("incorrect");
             }
             Sound.wrong.play();
+            this.incrementCurrentQuestionAttempts();
             return false;
         }
     }
@@ -77,18 +111,30 @@ jQuery(function() {
     updatePiece();
 });
 
+function restartQuiz() {
+    quiz = new Quiz(Piece.newRandomMain());
+    updatePiece();
+    $("#piece").animate({ scrollLeft: 0 }, 600, "swing");
+}
+
 function updatePiece() {
-    $("#piece").html(quiz.piece.notation);
+    const end = `<div id="coda">
+        <div id="score"></div>
+        <button id="play"></button>
+    </div>`;
+    $("#piece").html(quiz.piece.notation(true) + end);
+    $("#play").button({
+        label: "Play Again",
+        icons: { primary: "ui-icon-refresh" }
+    }).on("click", function() {
+        restartQuiz();
+    });
+    updateScore();
+    updateButtons();
 }
 
 function updateScore() {
-    const time = quiz.averageTime;
-    if (time === null) {
-        $("#score").html(``);
-    } else {
-        const formatted = Math.round(time / 100) / 10;
-        $("#score").html(`Average time: ${formatted} seconds`);
-    }
+    $("#score").html(`${quiz.formattedAccuracy}<br/>${quiz.formattedAverageTime}`);
 }
 
 function updateButtons() {
@@ -108,6 +154,25 @@ function check(guess: PitchClass) {
     }
     updateButtons();
     updateScore();
+
+    const scrollMargin = vw(21.5);
+    let newScroll = 0;
+    if (quiz.isFinished) {
+        const coda = $("#coda")[0];
+        newScroll = coda.offsetLeft;
+    } else {
+        const nextNote = $("#" + quiz.currentNoteID)[0];
+        newScroll = nextNote.offsetLeft - scrollMargin;
+    }
+    $("#piece").stop().animate({ scrollLeft: newScroll }, 1000, "swing");
+
+    if (quiz.isFinished && quiz.accuracy == 1) {
+        setTimeout(function() {
+            //@ts-ignore
+            party.confetti(document.body, { count: 100}); //How do we import this module properly?
+            Sound.fanfare.play();
+        }, 1000);
+    }
 }
 
 $(document).keydown(function(event) {
@@ -119,6 +184,9 @@ $(document).keydown(function(event) {
         case "g": check(new PitchClass("G")); break;
         case "a": check(new PitchClass("A")); break;
         case "b": check(new PitchClass("B")); break;
+        case "Enter":
+            if (quiz.isFinished) { restartQuiz(); }
+            break;
         default: break;
     }
 });

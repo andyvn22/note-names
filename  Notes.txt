@@ -19,19 +19,33 @@ JGSW:
     + Allow editing range boundaries
 + Link back to settings page
 + Make treble/bass selection pretty with images
-- Try wrapping a long staff in a scroller
-- Try auto-scrolling to the next note
-- If scrolling seems like the way to go, add a restart button at the end of the piece
++ Try wrapping a long staff in a scroller
++ Try auto-scrolling to the next note
++ If scrolling seems like the way to go, add a restart button at the end of the piece
+
+FOR RELEASE:
++ Fix staff width on iPhone (overlaps buttons)
++ Make notation larger by default on iPhone
++ Fix ledger line horizontal spacing
++ Find a way to make a max height relative to viewport so note buttons don't go offscreen
+    + CSS min(vw, vh) works. Now move it out of `#piece` and into index.html's body, and define everything relative to that.
++ Add an about screen
+
+UNICORNS:
 - Can you add letter names to finished noteheads?
+    - First, switch to using generic noteheads with a combining stem (U+E210).
+    - Fix any layout issues that result.
+    - Now you can swap out the generic notehead for a lettered one once completed.
 - Add help button that displays answers & explanations
     - Explain space notes & line notes with mnemonics
     - Explain high & low notes by counting up to them
 - Add flats/sharps/naturals as an option
-    - Display flat/sharp buttons & disable hotkeys
-- Add key signatures to pieces
+    - If enabled, display flat/sharp buttons & disable hotkeys
+    - Add flats/sharps to the model
+    - Display flats & sharps on staff
     - Write in 4/4 & add measures
-    - Only display accidentals if needed
-- Check for correct letter name but wrong accidental & explain
-
-BUGS:
-- Messing with text-shadow for the clef highlights in setup causes jitter (at least in Safari)
+    - Track previous notes in measure & display naturals when needed
+- Add key signatures to model
+    - Check key signature when deciding accidental display
+    - Add key signature choice to Settings
+    - Check for correct letter name but wrong accidental & explain

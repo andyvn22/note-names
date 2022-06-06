@@ -10,8 +10,34 @@
 </head>
 <body>
 	<style>
+		body {
+			font-size: min(33vw, 22vh);
+			height: stretch;
+		}
+
 		#piece {
-			font-size: 12vw;
+			padding-right: 100%;
+			overflow-x: scroll;
+			overflow-y: hidden;
+			display: block;
+		}
+
+		#coda {
+			display: inline-block;
+			font-size: min(0.25em, 2rem); /* don't get larger than the note buttons */
+			margin-left: 6em;
+			position: relative;
+			top: -0.9em;
+		}
+
+		#score {
+			line-height: 1.5em;
+		}
+
+		.score-data {
+			font-weight: bold;
+			font-size: 1.5em;
+			padding-right: 0.1em;
 		}
 
 		@keyframes correct {
@@ -55,28 +81,25 @@
 		}
 
 		#buttons {
-			font-size: min(5vw, 1em); /* fill screen unless screen is silly wide */
+			font-size: min(5vw, 2rem); /* fill screen unless screen is silly wide */
+			width: 100%;
 			touch-action: manipulation;
 		}
 
 		#buttons .ui-button {
-			width: 12%;
-			max-width: 3em;
+			width: 10%;
 			padding-left: 0;
 			padding-right: 0;
 		}
 
-		#score {
-			margin-top: 0.5em;
-		}
-
 		#settings {
-			font-size: min(5vw, 1em); /* don't get larger than the note buttons */
+			font-size: min(5vw, 2rem); /* don't get larger than the note buttons */
 		}
 	</style>
 	<script src="include/jquery-1.12.2.min.js"></script>
 	<script src="include/jquery-ui.min.js"></script>
 	<script src="include/howler.core.js"></script>
+	<script src="include/party.min.js"></script>
 	<script src="music.js"></script>
 	<script src="index.js"></script>
 
@@ -92,9 +115,6 @@
 		<button id="g"></button>
 	</div>
 
-	<div id="score"></div>
-
-	<br/>
 	<button id="settings"></button>
 </body>
 </html>

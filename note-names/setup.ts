@@ -1,4 +1,22 @@
 jQuery(function() {
+    $("#helpDialog").dialog({
+        title: "Note Names Help",
+        autoOpen: false,
+        modal: true,
+        width: Math.min(vw(80), em(40)),
+        buttons: { "OK": function() { $(this).dialog("close"); } },
+        show: {
+            effect: "drop",
+            duration: 600
+        },
+        hide: {
+            effect: "drop",
+            duration: 600
+        }
+    })
+
+    $("#helpButton").on("click", () => $("#helpDialog").dialog("open"));
+
     $("#play").button({
         label: "Play!",
         icons: { primary: "ui-icon-play" }
@@ -35,7 +53,7 @@ jQuery(function() {
             changeClef(clefName);
         });
 
-        $(`#image-${clefName} div.staff`).html(new Piece(Clef.named(clefName), []).notation);
+        $(`#image-${clefName} div.staff`).html(new Piece(Clef.named(clefName), []).notation());
     }
 
     update();
@@ -75,8 +93,8 @@ function update() {
         }
     }
     const clef = Clef.named(Settings.shared.clefName);
-    $("#rangeBoundaryLeft").html(new Piece(clef, [Settings.shared.oneRangeBoundary]).notation);
-    $("#rangeBoundaryRight").html(new Piece(clef, [Settings.shared.otherRangeBoundary]).notation);
+    $("#rangeBoundaryLeft").html(new Piece(clef, [Settings.shared.oneRangeBoundary]).notation());
+    $("#rangeBoundaryRight").html(new Piece(clef, [Settings.shared.otherRangeBoundary]).notation());
     $("#rangeBoundaryLeft-stepper-up").button(Settings.shared.oneRangeBoundary.moved(1).isAllowedIn(clef) ? "enable" : "disable");
     $("#rangeBoundaryLeft-stepper-down").button(Settings.shared.oneRangeBoundary.moved(-1).isAllowedIn(clef) ? "enable" : "disable");
     $("#rangeBoundaryRight-stepper-up").button(Settings.shared.otherRangeBoundary.moved(1).isAllowedIn(clef) ? "enable" : "disable");
