@@ -85,7 +85,7 @@ body {
 
 .ledgerLine {
     letter-spacing: -1em;
-    left: 0.22em;
+    left: -0.1em;
 }
 
 .finalBarline {
