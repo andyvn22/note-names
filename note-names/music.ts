@@ -295,7 +295,7 @@ class Pitch {
     static readonly ledgerLineCharacter = "\ue022";
 }
 
-const AllClefNames = ["Treble", "Bass", "Tenor"] as const;
+const AllClefNames = ["Treble", "Bass", "Tenor", "Alto"] as const;
 type ClefName = typeof AllClefNames[number];
 function isClefName(value: string): value is ClefName {
     return AllClefNames.map(x => x as string).includes(value);
@@ -345,11 +345,16 @@ class Clef {
         return new Clef("Tenor", new Pitch("A",3), "\ue05c", -6);
     }
 
+    static get alto() {
+        return new Clef("Alto", new Pitch("C",4), "\ue05c", -4);
+    }
+
     static named(clefName: ClefName): Clef {
         switch (clefName) {
             case "Treble": return this.treble;
             case "Bass": return this.bass;
             case "Tenor": return this.tenor;
+            case "Alto": return this.alto;
         }
     }
 
