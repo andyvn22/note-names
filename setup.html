@@ -1,0 +1,178 @@
+<!doctype html>
+<html>
+<head>
+	<meta charset="utf-8"/>
+	<meta name="viewport" content="width=device-width, viewport-fit=cover"/>
+	<title>Note Names - Setup</title>
+	<link rel="stylesheet" href="include/jquery-ui.css"/>
+	<link rel="stylesheet" href="include/jquery-ui-1.12.icon-font.min.css"/>
+	<link rel="stylesheet" href="basics.css"/>
+</head>
+<body>
+	<style>
+        body {
+            margin-top: 2em;
+            font-size: 2em;
+        }
+
+        fieldset {
+            margin-bottom: 2em;
+            margin-left: auto;
+            margin-right: auto;
+            border-radius: 0.8em;
+            max-width: 20em;
+        }
+
+        #clef {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+        }
+
+        #image-Treble div.staff.selected, #image-Bass div.staff.selected, #image-Alto div.staff.selected {
+            color: black;
+            text-shadow: 0 0 0.1em white, 0 0 0.2em blue;
+        }
+
+        #image-Treble, #label-Treble, #explanation-Treble {
+            display: inline-grid;
+            grid-column: 1;
+        }
+
+        #image-Bass, #label-Bass, #explanation-Bass {
+            display: inline-grid;
+            grid-column: 2;
+        }
+
+        #image-Alto, #label-Alto, #explanation-Alto {
+            display: inline-grid;
+            grid-column: 3;
+        }
+
+        #image-Treble, #image-Bass, #image-Alto {
+            grid-row: 1;
+            font-size: 2em;
+        }
+
+        #image-Treble div.staff, #image-Bass div.staff, #image-Alto div.staff {
+            display: inline-block;
+            margin-left: auto;
+            margin-right: auto;
+            margin-top: -1em;
+            margin-bottom: -0.6em;
+            color: rgb(51, 51, 51);
+        }
+
+        #label-Treble, #label-Bass, #label-Alto {
+            grid-row: 2;
+            font-weight: bold;
+        }
+
+        #label-Treble input, #label-Bass input, #label-Alto input {
+            position: relative;
+            top: -0.5em;
+        }
+
+        #explanation-Treble, #explanation-Bass, #explanation-Alto {
+            grid-row: 3;
+            font-size: 0.6em;
+            font-weight: 100;
+        }
+
+        #rangeBoundaryLeft, #rangeBoundaryRight {
+            font-size: 2em;
+        }
+
+        .stepper {
+            display: inline-block;
+            font-size: 1em;
+			touch-action: manipulation;
+        }
+
+        .stepper .ui-button {
+            padding-top: 0.16em;
+            padding-bottom: 0.16em;
+            padding-left: 0.3em;
+            padding-right: 0.3em;
+        }
+
+        /********/
+        /* Help */
+        /********/
+
+        #helpButton {
+            margin-left: 0.5em;
+            font-size: 2em;
+            color: rgb(71, 71, 71);
+            cursor: pointer;
+        }
+
+        #play {
+            margin-left: 3em; /* balance help button & margin so that play button is centered */
+        }
+
+        #helpButton:hover {
+            color: rgb(134, 134, 134);
+        }
+
+        .ui-dialog {
+            font-size: 0.5em;
+        }
+
+        #helpDialog h2 {
+            font-size: 1em;
+        }
+	</style>
+	<script src="include/jquery-1.12.2.min.js"></script>
+	<script src="include/jquery-ui.min.js"></script>
+	<script src="include/howler.core.js"></script>
+	<script src="music.js"></script>
+	<script src="setup.js"></script>
+    
+    <fieldset>
+        <legend>Clef</legend>
+        <div id="clef">
+            <div id="image-Treble"><div class="staff"></div></div>
+            <div id="label-Treble"><label><input type="radio" id="Treble" name="clef" value="Treble"> Treble</label></div>
+            <div id="explanation-Treble">(flute, oboe, clarinet, sax, trumpet, horn, mallets, violin)</div>
+            
+            <div id="image-Bass"><div class="staff"></div></div>
+            <div id="label-Bass"><label><input type="radio" id="Bass" name="clef" value="Bass"> Bass</label></div>
+            <div id="explanation-Bass">(bassoon, trombone, baritone, tuba, string bass, timpani, cello)</div>
+            
+            <div id="image-Alto"><div class="staff"></div></div>
+            <div id="label-Alto"><label><input type="radio" id="Alto" name="clef" value="Alto"> Alto</label></div>
+            <div id="explanation-Alto">(viola)</div>
+        </div>
+    </fieldset>
+
+    <fieldset>
+        <legend>Range</legend>
+        Include notes between:<br/>
+        <div class="stepper">
+            <button id="rangeBoundaryLeft-stepper-up"></button>
+            <br/>
+            <button id="rangeBoundaryLeft-stepper-down"></button>
+        </div>
+        <div class="staff" id="rangeBoundaryLeft"></div>
+        &nbsp;and&nbsp;
+        <div class="staff" id="rangeBoundaryRight"></div>
+        <div class="stepper">
+            <button id="rangeBoundaryRight-stepper-up"></button>
+            <br/>
+            <button id="rangeBoundaryRight-stepper-down"></button>
+        </div>
+    </fieldset>
+
+    <button id="play"></button> <span id="helpButton" class="ui-icon ui-icon-help"></span>
+
+    <div id="helpDialog">
+        <h2>What is this?</h2>
+        <p>This is a game about note names. Every time you play, you'll get a little more confident at reading music!</p>
+        <h2>Who made this?</h2>
+        <p><a href="https://andyvn.ath.cx/">Andy Van Ness</a> made this. He's a band teacher at Linden Avenue Middle School in Red Hook, New York.</p>
+        <h2>Can I see the code?</h2>
+        <p>Sure! <a href="https://github.com/andyvn22/note-names">Here's the GitHub repository.</a> By the way, this work is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by/4.0/">Creative Commons Attribution 4.0 International License</a>.</p>
+        <a rel="license" href="http://creativecommons.org/licenses/by/4.0/"><img alt="Creative Commons License" style="border-width:0" src="https://i.creativecommons.org/l/by/4.0/88x31.png" /></a>
+    </div>
+</body>
+</html>
